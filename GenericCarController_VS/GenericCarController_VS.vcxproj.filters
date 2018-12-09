@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="lib">
+      <UniqueIdentifier>{0ed8f0bb-e290-4829-a5bb-355120c69f92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\can">
+      <UniqueIdentifier>{52bb4ef3-fc3d-4895-a2ba-6c56e0940c26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\gps">
+      <UniqueIdentifier>{c12976a1-dc59-4d3e-8694-a2823f70b474}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\timer">
+      <UniqueIdentifier>{2a9b3e6b-fbe4-4f3f-b30a-cf9103c3e3a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\serial">
+      <UniqueIdentifier>{30f8c6ad-a65f-47d6-8884-1bf2defda695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cars">
+      <UniqueIdentifier>{faf0ee7f-7b23-42ce-95fa-22e4a272f609}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cars\FordFocus2005">
+      <UniqueIdentifier>{940af590-ec30-492e-9e73-e6fe4a3e5530}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cars\ToyotaCorolla2000">
+      <UniqueIdentifier>{1fe26544-de4b-4c6f-9542-0ef2af91d542}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cars\OpelAstraH2004">
+      <UniqueIdentifier>{080c9d3e-f481-40e7-b185-369f21142a1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cars\DefaultCar">
+      <UniqueIdentifier>{daea2b87-9ef8-4b2d-9965-12c59f0ba4bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\remote">
+      <UniqueIdentifier>{d9cef30c-0056-46ae-ab42-afcf445eb233}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\queue">
+      <UniqueIdentifier>{d72637af-7483-4828-a223-f8d74d0c094c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\others">
+      <UniqueIdentifier>{774b6cb0-d169-404f-b104-919032c94b25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\serial\config">
+      <UniqueIdentifier>{2ff25cc5-8b3e-4e2c-9c71-a99703454896}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cars\OpelAstraH2004-RPI">
+      <UniqueIdentifier>{1ca8fef9-866b-42fb-8e34-02046eb026b6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GenericCarController_VS.ino" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="__vm\.GenericCarController_VS.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base_serial_handlers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="can_command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="can_controller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="configuration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="configuration_eeprom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gsm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="potentiometer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="power.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="radio_command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="serial_controller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="serial_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="traccar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\gps\CosaCompat.h">
+      <Filter>lib\gps</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\gps\GPSfix.h">
+      <Filter>lib\gps</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\gps\GPSfix_cfg.h">
+      <Filter>lib\gps</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\gps\Location.h">
+      <Filter>lib\gps</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\gps\NeoGPS_cfg.h">
+      <Filter>lib\gps</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\gps\NeoTime.h">
+      <Filter>lib\gps</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\gps\NMEAGPS.h">
+      <Filter>lib\gps</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\gps\NMEAGPS_cfg.h">
+      <Filter>lib\gps</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\serial\NeoSWSerial.h">
+      <Filter>lib\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004\astra_h.h">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004\astra_h_events.h">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\FordFocus2004\FordFocus2004.h">
+      <Filter>cars\FordFocus2005</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\FordFocus2004\car_configuration.h">
+      <Filter>cars\FordFocus2005</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\ToyotaCorolla2000\car_configuration.h">
+      <Filter>cars\ToyotaCorolla2000</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\ToyotaCorolla2000\ToyotaCorolla2000.h">
+      <Filter>cars\ToyotaCorolla2000</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004\car_configuration.h">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\DefaultCar\car_configuration.h">
+      <Filter>cars\DefaultCar</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\DefaultCar\DefaultCar.h">
+      <Filter>cars\DefaultCar</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004\astra_h_remote_door.h">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClInclude>
+    <ClInclude Include="constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004\astra_h_events_buttons.h">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004\constants.h">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\queue\Queue_static.h">
+      <Filter>lib\queue</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\others\FastGPIO.h">
+      <Filter>lib\others</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_serial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\serial\NeoICSerial.h">
+      <Filter>lib\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\serial\config\NeoICSerial_Boards.h">
+      <Filter>lib\serial\config</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\serial\config\NeoICSerial_Timers.h">
+      <Filter>lib\serial\config</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\serial\NeoHWSerial.h">
+      <Filter>lib\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\serial\NeoHWSerial_private.h">
+      <Filter>lib\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="customArduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="injection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\can\mcp2515.h">
+      <Filter>lib\can</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\can\can.h">
+      <Filter>lib\can</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004\astra_h_status.h">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClInclude>
+    <ClInclude Include="car_status.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004\astra_h_alarm_led.h">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004\astra_h_can_commands.h">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004\astra_h_dis.h">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004\astra_h_power.h">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004\astra_h_test_mode.h">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004-RPI\astra_h.h">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004-RPI\astra_h_events.h">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004-RPI\astra_h_events_buttons.h">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004-RPI\astra_h_power.h">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004-RPI\astra_h_remote_door.h">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004-RPI\car_configuration.h">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004-RPI\constants.h">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004-RPI\time.h">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClInclude>
+    <ClInclude Include="cars\OpelAstraH2004-RPI\utils.h">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClInclude>
+    <ClInclude Include="configuration_secret.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="configuration_secret_template.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="base_serial_handlers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="can_command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="can_controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="configuration_eeprom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gps.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gsm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="potentiometer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="power.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="radio_command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="serial_controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="serial_handler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="traccar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\gps\Location.cpp">
+      <Filter>lib\gps</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\gps\NeoTime.cpp">
+      <Filter>lib\gps</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\gps\NMEAGPS.cpp">
+      <Filter>lib\gps</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\serial\NeoSWSerial.cpp">
+      <Filter>lib\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\FordFocus2004\FordFocus2004.cpp">
+      <Filter>cars\FordFocus2005</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\ToyotaCorolla2000\ToyotaCorolla2000.cpp">
+      <Filter>cars\ToyotaCorolla2000</Filter>
+    </ClCompile>
+    <ClCompile Include="configuration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004\astra_h_events.cpp">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\DefaultCar\DefaultCar.cpp">
+      <Filter>cars\DefaultCar</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004\astra_h_remote_door.cpp">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004\astra_h_events_buttons.cpp">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClCompile>
+    <ClCompile Include="constants.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004\constants.cpp">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\others\FastGPIO.cpp">
+      <Filter>lib\others</Filter>
+    </ClCompile>
+    <ClCompile Include="cmd_serial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\serial\NeoICSerial.cpp">
+      <Filter>lib\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\serial\NeoHWSerial.cpp">
+      <Filter>lib\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\serial\NeoHWSerial0.cpp">
+      <Filter>lib\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="injection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\can\mcp2515.cpp">
+      <Filter>lib\can</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004\astra_h_status.cpp">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClCompile>
+    <ClCompile Include="car_status.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004\astra_h_alarm_led.cpp">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004\astra_h_can_commands.cpp">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004\astra_h_dis.cpp">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004\astra_h_power.cpp">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004\astra_h_test_mode.cpp">
+      <Filter>cars\OpelAstraH2004</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004-RPI\astra_h_events.cpp">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004-RPI\astra_h_events_buttons.cpp">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004-RPI\astra_h_power.cpp">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004-RPI\astra_h_remote_door.cpp">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004-RPI\constants.cpp">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004-RPI\time.cpp">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClCompile>
+    <ClCompile Include="cars\OpelAstraH2004-RPI\utils.cpp">
+      <Filter>cars\OpelAstraH2004-RPI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Notas.txt" />
+  </ItemGroup>
+</Project>
