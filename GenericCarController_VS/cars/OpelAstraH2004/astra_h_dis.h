@@ -1,3 +1,9 @@
+//
+// Author:	Álvaro Graciá Gil
+// License:	This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
+//	 		(http://creativecommons.org/licenses/by-nc-sa/4.0/) 
+//
+
 #ifndef __ASTRA_H_DIS__H__
   #define __ASTRA_H_DIS__H__
 	  #include "../../can_command.h"
@@ -40,7 +46,7 @@
 		The first byte of the packet identifies a multi-packet message. It starts with 0x10, than follows 0x2X where X increments from 1 to F. So after 0x2F comes 0x20, 0x21…
 		The second Byte of the first packet is the number in Bytes. The last packet is always 8 Byte long but the rest is ignored (these are either filled with 0x00 or the same then the previous package).
 		Than are two byte of command or mode. This is 0x4000, 0xC000, 0x5000 or 0xA000. Don’t know what that means… Than comes the size and type of the following container. Type 0x03 seems to update the main screen.
-		Now follow some strings, starting with an ID (here 0x01,0x10,0x11 and 0x12), the number of characters and the characters in UTF-16 (where only very vew unicode-chars are supported but that comes in the next post).
+		Now follow some strings, starting with an ID (here 0x01,0x10,0x11 and 0x12), the number of characters and the characters in UTF-16 (where only very few unicode-chars are supported but that comes in the next post).
 		*/
 
 		extern const CAN_COMMAND CMD_DIS_SET_MODE;

@@ -1,3 +1,9 @@
+//
+// Author:	Álvaro Graciá Gil
+// License:	This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
+//	 		(http://creativecommons.org/licenses/by-nc-sa/4.0/) 
+//
+
 #include "../../configuration.h"
 
 #if CAR_MODEL == OPEL_ASTRA_H_2004_MIN_CAR 

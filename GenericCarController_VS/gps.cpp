@@ -1,3 +1,9 @@
+//
+// Author:	Álvaro Graciá Gil
+// License:	This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
+//	 		(http://creativecommons.org/licenses/by-nc-sa/4.0/) 
+//
+
 #include "gps.h"
 #include "cmd_serial.h"
 
@@ -31,7 +37,7 @@
 
 		gpsHandler.handle(c);
 
-		#if !GPS_SERIAL_ALWAUS_ENABLED
+		#if !GPS_SERIAL_ALWAYS_ENABLED
 			if(gpsHandler.available())
 				gpsDisableListenSerial();
 		#endif
@@ -40,7 +46,7 @@
 	//PUBLIC FUNCTIONS
 	void gpsAcquireFix()
 	{
-		#if !GPS_SERIAL_ALWAUS_ENABLED
+		#if !GPS_SERIAL_ALWAYS_ENABLED
 			#if MULTIPLE_SW_SERIALS	&& GPS_SERIAL_MODE == SW_SERIAL
 				NeoSWSerial::disableCurrentListener();
 			#endif
@@ -98,7 +104,7 @@
 		gpsSerial.begin(GPS_BAUDRATE);    
 		gpsSerial.attachInterrupt(gpsSerial_ISR);		
 
-		#if !GPS_SERIAL_ALWAUS_ENABLED
+		#if !GPS_SERIAL_ALWAYS_ENABLED
 			gpsDisableListenSerial();
 		#endif
 
