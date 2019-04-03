@@ -31,3 +31,8 @@ For learning purposes you can see inside the "img/" folder the progression of al
 <br/>
 <img src='img/prototypes_front.png?raw=true' width='400px' height='255px' alt='Prototypes (Front view)' />
 <img src='img/prototypes_back.png?raw=true' width='400px' height='255px' alt='Prototype (Back view)' />
+
+### License
+Author:	  Álvaro Graciá Gil<br/>
+License:	This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License<br/>
+	 		    (http://creativecommons.org/licenses/by-nc-sa/4.0/)<br/>
