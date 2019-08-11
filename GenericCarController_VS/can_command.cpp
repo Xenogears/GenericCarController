@@ -102,54 +102,45 @@ CAN_COMMAND::CAN_COMMAND(const CAN_COMMAND *cmd)
 }
 #pragma endregion
 
-void CAN_COMMAND::print(Stream *s = NULL) const
-{     
-	if (s == NULL)
-		s = &cmdSerial;
-
-	s->print(millis());
-	utilsPrint_P(s, sSpace);
-	s->print(this->can_dlc);
-	s->print(F(" 0x"));
-	s->print(this->can_id, HEX);
-	utilsPrint_P(s, sSpaceCommaSpace);
+void CAN_COMMAND::print() const
+{     	
+	cmdSerialPrint(millis());
+	cmdSerialPrint_P(sSpace);
+	cmdSerialPrint((int)this->can_dlc);
+	cmdSerialPrint_P(sSpace);
+	cmdSerialPrint(this->can_id, HEX);
+	cmdSerialPrint_P(sSpaceCommaSpace);
 
 	for(uint8_t i = 0; i < this->can_dlc; i++)
 	{		
-		s->print(this->data[i], HEX);
-		utilsPrint_P(s, sComma);
+		cmdSerialPrint(this->data[i], HEX);		
+		cmdSerialPrint_P(sComma);
 	}
 
-	s->println();
-	s->flush();
+	cmdSerialPrintln();
+	cmdSerialFlush();
 }
 
-void CAN_COMMAND::print(const char *prefix, Stream *s = NULL) const
+void CAN_COMMAND::print(const char *prefix) const
 {
-	if (s == NULL)
-		s = &cmdSerial;
-
 	if (prefix != NULL)
 	{
-		utilsPrint(s, prefix);
-		utilsPrint_P(s, sTwoDots);
+		cmdSerialPrint(prefix);
+		cmdSerialPrint_P(sTwoDots);
 	}
 
-	this->print(s);
+	this->print();
 }
 
-void CAN_COMMAND::print_P(const PROGMEM char *prefix, Stream *s = NULL) const
+void CAN_COMMAND::print_P(const PROGMEM char *prefix) const
 {
-	if (s == NULL)
-		s = &cmdSerial;
-
 	if (prefix != NULL)
 	{
-		utilsPrint_P(s, prefix);
-		utilsPrint_P(s, sTwoDots);
+		cmdSerialPrint_P(prefix);
+		cmdSerialPrint_P(sTwoDots);
 	}
 
-	this->print(s);
+	this->print();
 }
 
 bool CAN_COMMAND::isPrefix(CAN_COMMAND *cmd) const

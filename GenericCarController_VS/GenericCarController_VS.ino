@@ -53,11 +53,11 @@ void setup()
 	#if COMPILE_POTENTIOMETER
 		if (CONFIG.get(PRINT_STATUS_INFO))
 		{			
-			utilsPrint_P(sPOT);
-			utilsPrint_P(sSpace);
+			cmdSerialPrint_P(sPOT);
+			cmdSerialPrint_P(sSpace);
 
-			if (setupPOT()) utilsPrintln_P(sOK);
-			else utilsPrintln_P(sERROR);
+			if (setupPOT()) cmdSerialPrintln_P(sOK);
+			else cmdSerialPrintln_P(sERROR);
 		}
 		else setupPOT();
 	#endif
@@ -102,22 +102,22 @@ void setup()
 		DEFAULT_CAN.setupPins();
 		if (CONFIG.get(PRINT_STATUS_INFO))
 		{
-			utilsPrint_P(sCAN);
-			utilsPrint_P(sSpace);
+			cmdSerialPrint_P(sCAN);
+			cmdSerialPrint_P(sSpace);
 		}
 		
 		if (!DEFAULT_CAN.begin(CAN_BAUDRATE, CAN_CLOCKSET))
 		{
 			if (CONFIG.get(PRINT_STATUS_INFO))
 			{
-				utilsPrint_P(sERROR);
-				cmdSerial.flush();
+				cmdSerialPrint_P(sERROR);
+				cmdSerialFlush();
 			}
 
 			utilsResetSystem();
 		}
 		else if (CONFIG.get(PRINT_STATUS_INFO))
-			utilsPrintln_P(sOK);
+			cmdSerialPrintln_P(sOK);
 	#endif
       
 	#if COMPILE_SERIAL_CONTROL    
@@ -135,10 +135,6 @@ void setup()
 			#if COMPILE_CAN
 				SerialController.addHandler(new SERIAL_HANDLER(sCAN, CANHandleConfCmd));
 			#endif
-		#endif
-  
-		#if SERIAL_CONTROL_MODE >= SC_FULL
-			SerialController.addHandler(new SERIAL_HANDLER(sBT, handleBT));
 		#endif
 	#endif
 	
@@ -245,7 +241,9 @@ void loop()
 		#endif
 
 		#if COMPILE_SERIAL_CONTROL			
-			checkCMDSerial();				
+			#ifdef CMD_SERIAL_MODE
+				checkCMDSerial();				
+			#endif	
 		#endif
 
 		#if ENABLE_INJECTION			

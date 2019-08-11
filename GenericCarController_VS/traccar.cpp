@@ -53,73 +53,73 @@ bool traccarCanNotifyLocation()
 
 bool traccarNotifyLocation(TRACCAR_NOTIFICATION *notification)
 {  
-	char temp[16];
-	#if USE_STATIC_MEM == 0
-		char *traccarURL = (char*)malloc(TRACCAR_MAX_HTTP_URL_LEN);
-		if(traccarURL == NULL)        
-			return false;   
-	#endif
+	#if COMPILE_GSM_MODEM
+		char temp[16];
+		#if USE_STATIC_MEM == 0
+			char *traccarURL = (char*)malloc(TRACCAR_MAX_HTTP_URL_LEN);
+			if(traccarURL == NULL)        
+				return false;   
+		#endif
   
-	traccarURL[0] = '\0'; 
+		traccarURL[0] = '\0'; 
   
-	strcat_P(traccarURL, PSTR("/?id="));
-	strcat_P(traccarURL, PSTR(TRACCAR_DEVICE_ID)); 
+		strcat_P(traccarURL, PSTR("/?id="));
+		strcat_P(traccarURL, PSTR(TRACCAR_DEVICE_ID)); 
   
-	#if TRACCAR_COMPILE_ALARM_MODE
-		if(traccarIsAlarmModeEnabled())
-		{
-			strcat_P(traccarURL, PSTR("&alarm="));
-			strcat_P(traccarURL, sAlarm);
-		}
-	#endif
-  
-	strcat_P(traccarURL, PSTR("&ignition="));
-	strcat_P(traccarURL, (powIsPowerOn() ? PSTR("true") : PSTR("false")));    
-
-	#if COMPILE_GPS
-		if(notification->lat != 0.0f && notification->lon != 0.0f)
-		{      
-			dtostrf(notification->lat, 8, 6, temp);
-			strcat_P(traccarURL, PSTR("&lat="));
-			strcat(traccarURL, temp);
-
-			dtostrf(notification->lon, 8, 6, temp);
-			strcat_P(traccarURL, PSTR("&lon="));
-			strcat(traccarURL, temp);
-		} 
-	
-		#if TRACCAR_SEND_TIMESTAMP
-			if(notification->timestamp > 0)
-			{    
-				strcat_P(traccarURL, PSTR("&timestamp="));
-				ltoa(notification->timestamp, temp, 10);
-				strcat(traccarURL, temp);    
+		#if TRACCAR_COMPILE_ALARM_MODE
+			if(traccarIsAlarmModeEnabled())
+			{
+				strcat_P(traccarURL, PSTR("&alarm="));
+				strcat_P(traccarURL, sAlarm);
 			}
 		#endif
-	#endif
+  
+		strcat_P(traccarURL, PSTR("&ignition="));
+		strcat_P(traccarURL, (powIsPowerOn() ? PSTR("true") : PSTR("false")));    
 
-	#if COMPILE_CAR_STATUS_MONITOR
-		#if MON_FETCH_VOLTAGE && MON_REPORT_VOLTAGE_TRACCAR
-			strcat_P(traccarURL, PSTR("&batt="));
-			dtostrf(currentCarStatus.voltage, 2, 2, temp);			
-			strcat(traccarURL, temp);
-		#endif
-		#if MON_FETCH_ENGINE_TEMP && MON_REPORT_ENGINE_TEMP_TRACCAR
-			strcat_P(traccarURL, PSTR("&temp="));
-			itoa(currentCarStatus.engineTemp, temp, 10);
-			strcat(traccarURL, temp);
-		#endif
-		#if MON_FETCH_SPEED && MON_REPORT_SPEED_TRACCAR
-			strcat_P(traccarURL, PSTR("&speed="));			
-			itoa(currentCarStatus.speed, temp, 10);
-			strcat(traccarURL, temp);
-		#endif
-	#endif
+		#if COMPILE_GPS
+			if(notification->lat != 0.0f && notification->lon != 0.0f)
+			{      
+				dtostrf(notification->lat, 8, 6, temp);
+				strcat_P(traccarURL, PSTR("&lat="));
+				strcat(traccarURL, temp);
 
-	if(CONFIG.get(PRINT_TRACCAR_INFO))	
-		cmdSerial.println(traccarURL);
+				dtostrf(notification->lon, 8, 6, temp);
+				strcat_P(traccarURL, PSTR("&lon="));
+				strcat(traccarURL, temp);
+			} 
+	
+			#if TRACCAR_SEND_TIMESTAMP
+				if(notification->timestamp > 0)
+				{    
+					strcat_P(traccarURL, PSTR("&timestamp="));
+					ltoa(notification->timestamp, temp, 10);
+					strcat(traccarURL, temp);    
+				}
+			#endif
+		#endif
 
-	#if COMPILE_GSM_MODEM
+		#if COMPILE_CAR_STATUS_MONITOR
+			#if MON_FETCH_VOLTAGE && MON_REPORT_VOLTAGE_TRACCAR
+				strcat_P(traccarURL, PSTR("&batt="));
+				dtostrf(currentCarStatus.voltage, 2, 2, temp);			
+				strcat(traccarURL, temp);
+			#endif
+			#if MON_FETCH_ENGINE_TEMP && MON_REPORT_ENGINE_TEMP_TRACCAR
+				strcat_P(traccarURL, PSTR("&temp="));
+				itoa(currentCarStatus.engineTemp, temp, 10);
+				strcat(traccarURL, temp);
+			#endif
+			#if MON_FETCH_SPEED && MON_REPORT_SPEED_TRACCAR
+				strcat_P(traccarURL, PSTR("&speed="));			
+				itoa(currentCarStatus.speed, temp, 10);
+				strcat(traccarURL, temp);
+			#endif
+		#endif
+
+		if(CONFIG.get(PRINT_TRACCAR_INFO))	
+			cmdSerial.println(traccarURL);
+		
 		return gsmHTTPGet(TRACCAR_HOST, TRACCAR_PORT, traccarURL, NULL, traccarNotificationOnSuccess, traccarNotificationOnError);
 	#else
 		traccarStatus &= TRCSTAT_SENDING;
@@ -185,8 +185,10 @@ void checkTraccar()
 			gpsAcquireFix();
 			traccarStatus |= TRCSTAT_ACQUIRING_GPS_FIX; //SET ACQUIRING GPS FIX FLAG
 		#else			
-			if(traccarAddNotification())
-				traccarStatus |= TRCSTAT_READY_TO_SEND; //SET READY FLAG
+			#if COMPILE_TRACCAR
+				if(traccarAddNotification())
+					traccarStatus |= TRCSTAT_READY_TO_SEND; //SET READY FLAG
+			#endif
 		#endif		
 	}
 

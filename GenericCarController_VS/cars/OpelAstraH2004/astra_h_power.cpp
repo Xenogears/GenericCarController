@@ -13,15 +13,15 @@
 	{
 		if(CONFIG.get(PRINT_STATUS_INFO))
 		{
-			utilsPrint_P(sPOW);
-			utilsPrint_P(sTwoDots);		
-			utilsPrint_P(newStatus & POWER_MODE_KEY_IN ? sIn : sOut);
-			utilsPrint_P(sComma);
+			cmdSerialPrint_P(sPOW);
+			cmdSerialPrint_P(sTwoDots);		
+			cmdSerialPrint_P(newStatus & POWER_MODE_KEY_IN ? sIn : sOut);
+			cmdSerialPrint_P(sComma);
 
 			if (newStatus == POWER_MODE_OFF || newStatus == POWER_MODE_KEY_IN)
-				utilsPrintln_P(sOff);
+				cmdSerialPrintln_P(sOff);
 			else
-				utilsPrintln_P(sOn);
+				cmdSerialPrintln_P(sOn);
 		}
 
 		

@@ -22,7 +22,6 @@
 
 //MSCAN 
 #define CAN_BAUDRATE					CAN_95KBPS
-#define CAN_WHITELIST_LENGTH            2  //items
 #define CAN_BLACKLIST_LENGTH            0  //items
 #define CAN_PERIODICAL_CMDS_LENGTH      0  //items
 

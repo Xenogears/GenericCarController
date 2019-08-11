@@ -285,11 +285,12 @@ int NeoSWSerial::read()
 
 //----------------------------------------------------------------------------
 
-void NeoSWSerial::attachInterrupt( isr_t fn )
+void NeoSWSerial::attachInterrupt( isr_t fn, void *isr_param )
 {
   uint8_t oldSREG = SREG;
   cli();
     _isr = fn;
+	_isr_param = isr_param;
   SREG = oldSREG;
 
 } // attachInterrupt
@@ -416,7 +417,7 @@ void NeoSWSerial::rxChar( uint8_t c )
 {
   if (listener) {
     if (listener->_isr)
-      listener->_isr( c );
+      listener->_isr( c , listener->_isr_param);
     else {
       uint8_t index = (rxHead+1) % RX_BUFFER_SIZE;
       if (index != rxTail) {

@@ -11,17 +11,17 @@
 	#include "../../cmd_serial.h"
 
 	#if COMPILE_SERIAL_CONTROL    
-		bool astraHLOGHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
-		bool astraHOPTHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
-		bool astraHDISHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
-		bool astraHBCHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
-		bool astraHPOWHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
+		bool astraHLOGHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
+		bool astraHOPTHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
+		bool astraHDISHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
+		bool astraHBCHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
+		bool astraHPOWHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
 
 		#if COMPILE_REMOTE_DOOR
-			bool astraHRDHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
+			bool astraHRDHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
 		#endif
 		#if COMPILE_RADIO_CONTROL
-			bool astraHRADHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
+			bool astraHRADHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
 		#endif
 	#endif
 
@@ -185,7 +185,7 @@
 
 	
 	//////////////////////// MESSAGE HANDLERS  ////////////////////////
-	bool astraHOPTHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+	bool astraHOPTHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 	{
 		bool handled;
 
@@ -194,22 +194,22 @@
 			handled = true;
 			char *param = params[0];
 
-			if (utilsEquals_P(param, sSIM))				cmdSerial.println(CONFIG.get(ENABLE_RADIO_SIMULATION) ? 1 : 0);
+			if (utilsEquals_P(param, sSIM))				serial->println(CONFIG.get(ENABLE_RADIO_SIMULATION) ? 1 : 0);
 			#if COMPILE_ALARM_LED
-				else if (utilsEquals_P(param, sLED))	cmdSerial.println(CONFIG.get(ENABLE_ALARM_LED) ? 1 : 0);
+				else if (utilsEquals_P(param, sLED))	serial->println(CONFIG.get(ENABLE_ALARM_LED) ? 1 : 0);
 			#endif
 			#if COMPILE_CAR_STATUS_MONITOR
-				else if (utilsEquals_P(param, sCAR))	cmdSerial.println(CONFIG.get(ENABLE_CAR_STATUS_MONITOR) ? 1 : 0);
+				else if (utilsEquals_P(param, sCAR))	serial->println(CONFIG.get(ENABLE_CAR_STATUS_MONITOR) ? 1 : 0);
 			#endif
 			#if COMPILE_TRACCAR
-				else if (utilsEquals_P(param, sPOW))	cmdSerial.println(CONFIG.get(ENABLE_POWER_NOTIFICATION) ? 1 : 0);
+				else if (utilsEquals_P(param, sPOW))	serial->println(CONFIG.get(ENABLE_POWER_NOTIFICATION) ? 1 : 0);
 			#endif
 			#if COMPILE_TEST_MODE
-				else if (utilsEquals_P(param, sTST))	cmdSerial.println(CONFIG.get(ENABLE_TEST_MODE) ? 1 : 0);
+				else if (utilsEquals_P(param, sTST))	serial->println(CONFIG.get(ENABLE_TEST_MODE) ? 1 : 0);
 			#endif
 			#if COMPILE_DIS
-				else if (utilsEquals_P(param, sDIS))	cmdSerial.println(CONFIG.get(ENABLE_DISPLAY) ? 1 : 0);
-				else if (utilsEquals_P(param, sRND))	cmdSerial.println(CONFIG.get(ENABLE_RANDOM_TEXTS) ? 1 : 0);
+				else if (utilsEquals_P(param, sDIS))	serial->println(CONFIG.get(ENABLE_DISPLAY) ? 1 : 0);
+				else if (utilsEquals_P(param, sRND))	serial->println(CONFIG.get(ENABLE_RANDOM_TEXTS) ? 1 : 0);
 			#endif			
 			else handled = false;
 		}
@@ -239,7 +239,7 @@
 			#endif						
 
 			if (handled)
-				utilsPrintln_P(sOK);
+				cmdSerialPrintln_P(serial, sOK);
 
 			return (!all & handled);
 		}
@@ -247,13 +247,13 @@
 
 	#if COMPILE_CAN	
 		#if COMPILE_DIS
-			bool astraHLOGHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+			bool astraHLOGHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 			{
 				if (utilsEquals_P(cmd, sGet))
 				{					
 					if (utilsEquals_P(params[0], sDIS))
 					{
-						cmdSerial.println(CONFIG.get(PRINT_DISPLAY_INFO) ? 1 : 0);
+						serial->println(CONFIG.get(PRINT_DISPLAY_INFO) ? 1 : 0);
 						return true;
 					}						
 					else return false;
@@ -268,13 +268,13 @@
 					else handled = false;
 
 					if (handled)
-						utilsPrintln_P(sOK);
+						utilsPrintln_P(serial, sOK);
 
 					return (!all & handled);
 				}
 			}
 
-			bool astraHDISHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+			bool astraHDISHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 			{					
 				if (CONFIG.get(ENABLE_DISPLAY) && utilsEquals_P(cmd, sSet) && paramsLength >= 1)
 				{
@@ -285,7 +285,7 @@
 			}
 		#endif
 	
-		bool astraHBCHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+		bool astraHBCHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 		{			
 			bool handled = true;
 			
@@ -300,7 +300,7 @@
 			return handled;			
 		}
 	
-		bool astraHPOWHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+		bool astraHPOWHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 		{		
 			CAN_COMMAND canCmd = CAN_COMMAND(0x450, 0x00, 0x00, 0x00);
 
@@ -314,7 +314,7 @@
 	#endif
 
 	#if COMPILE_REMOTE_DOOR
-		bool astraHRDHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+		bool astraHRDHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 		{
 			if (utilsEquals_P(cmd, sSend))
 			{
@@ -325,7 +325,7 @@
 						astraHRemoteDoorSendAction(&DOOR_1_OPEN, &DOOR_1_CLOSE);
 				#endif	
 
-				utilsPrintln_P(sOK);
+				cmdSerialPrintln_P(serial, sOK);
 
 				return true;
 			}
@@ -334,7 +334,7 @@
 	#endif
 
 	#if COMPILE_RADIO_CONTROL
-		bool astraHRADHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+		bool astraHRADHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 		{
 			bool handled = true;
 
@@ -359,6 +359,19 @@
 					potSetResistor(2, 0, true);
 					delay(10000);
 					radDisableCmd();      
+				}
+				else if (utilsEquals_P(cmd, sSet) && paramsLength >= 1)
+				{
+					uint16_t value = atoi(params[0]);
+					bool ring = false;
+					if(paramsLength >= 2)
+						ring = (params[1][0] == 'R');
+
+					uint16_t delay = RADIO_COMMAND_MIN_INTERVAL;
+					if (paramsLength >= 3)
+						delay = atoi(params[2]);					
+					
+					potSetResistor(value, delay, ring);					
 				}
 			#endif		
 			else handled = false;

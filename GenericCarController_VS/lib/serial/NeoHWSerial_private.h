@@ -94,7 +94,7 @@ NeoHWSerial::NeoHWSerial(
     _udr(udr),
     _rx_buffer_head(0), _rx_buffer_tail(0),
     _tx_buffer_head(0), _tx_buffer_tail(0),
-    _isr(0)
+    _isr(0, NULL)
 {
 }
 
@@ -107,7 +107,7 @@ void NeoHWSerial::_rx_complete_irq(void)
     // room
     unsigned char c = *_udr;
     if (_isr)
-      _isr( c );
+      _isr( c , _isr_param);
     else {
       rx_buffer_index_t i = (unsigned int)(_rx_buffer_head + 1) % SERIAL_RX_BUFFER_SIZE;
 

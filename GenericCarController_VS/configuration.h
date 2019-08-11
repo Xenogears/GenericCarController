@@ -19,10 +19,10 @@
 	#define OPEL_ASTRA_H_2004_MIN_CAR	4
 
 	/********* CONFIG **********/
-	#define CAR_MODEL								OPEL_ASTRA_H_2004_MIN_CAR
+	#define CAR_MODEL								OPEL_ASTRA_H_2004_CAR
 	#define BOARD_VERSION							43
 
-	#define COMPILE_DEBUG							1
+	#define COMPILE_DEBUG							0
 	#define COMPILE_CAN								1
 	#define COMPILE_CAN_PIN_CMD_AVAILABLE			1
 	#define COMPILE_CAN_INTERRUPT					1
@@ -33,9 +33,9 @@
 	#define COMPILE_POTENTIOMETER					1
 	#define COMPILE_SERIAL_CONTROL					1
 	#define COMPILE_EEPROM_CONFIG					1
-	#define COMPILE_TRACCAR							1
-	#define COMPILE_GPS								1
-	#define COMPILE_GSM_MODEM						1
+	#define COMPILE_TRACCAR							0
+	#define COMPILE_GPS								0
+	#define COMPILE_GSM_MODEM						0
 	#define COMPILE_CAR_STATUS_MONITOR				0	//It occupies around 1KB of code and consumes 40 bytes of RAM	
 
 	//INJECTION	
@@ -68,15 +68,12 @@
 	#define CAN_DEBUG_PRINT_QUEUE_STATS				1
 
 	//SERIAL
-	#define DEBUG_INVERT_SERIAL				0
-	#define DEFAULT_BAUDRATE                19200 //57600 //115200 fails (NeoIC)	
-	#define BLUETOOTH_PREV_BAUDRATE         9600
-	#define BLUETOOTH_NEW_BAUDRATE          115200
-	#define BLUETOOTH_NEW_BAUDRATE_INDEX    9      //230400
-	#define SC_FULL                         3      //GSM + BT CONFIG + GPS + POT CALIBRATION + [MID]
-	#define SC_MID                          2      //RAD + BC + CAN + [MIN]
-	#define SC_MIN                          1      //SYS + POW + LOG + OPT +  DIS
-	#define SERIAL_CONTROL_MODE             SC_MID
+	#define DEBUG_INVERT_SERIAL				1
+	#define DEFAULT_BAUDRATE                57600	//115200 fails (NeoIC)		
+	#define SC_FULL                         3		//GSM + GPS + POT CALIBRATION + POT SET + [MID]
+	#define SC_MID                          2		//RAD + BC + CAN + [MIN]
+	#define SC_MIN                          1		//SYS + POW + LOG + OPT +  DIS
+	#define SERIAL_CONTROL_MODE             SC_FULL
 	#define CMD_SERIAL_BUFFER_SIZE			64
 	#define CMD_USE_SERIAL_INTERRUPTS		1
 	#define MAX_SERIAL_HANDLERS				14
@@ -90,7 +87,7 @@
 	#define GPS_SERIAL_ALWAYS_ENABLED		0
 
 	//GSM
-	#define GSM_BAUDRATE							57600 //115200 fails (NeoHW)	
+	#define GSM_BAUDRATE							9600 //115200 fails (NeoHW)	
 	#define GSM_GET_MAX_TIMEOUT						25 * 1000L	//ms
 	#define GSM_GET_MAX_ERRORS_BEFORE_RESET			3
 	#define GSM_SETUP_MAX_TIMEOUT					60 * 1000L	//ms -> Prev = 30s //TODO -> CHECK	
@@ -161,7 +158,6 @@
 		#error BOARD v1 NOT SUPPORTED
 	#elif BOARD_VERSION == 2 || BOARD_VERSION == 20
 		#define CMD_SERIAL_MODE		HW_SERIAL
-		#define CMD_HW_SERIAL		NeoSerial
 
 		#if defined(__AVR_ATmega328P__)	//UNO, NANO
 			#define CAN_A_CS_PIN        10  //D10
@@ -185,7 +181,6 @@
 		#define COMPILE_GSM_MODEM                0
 	#elif BOARD_VERSION == 3 || BOARD_VERSION == 30
 		#define CMD_SERIAL_MODE		HW_SERIAL
-		#define CMD_HW_SERIAL		NeoSerial
 
 		#if defined(__AVR_ATmega328P__)	//UNO, NANO
 			#define CAN_A_CS_PIN        A0  //A0
@@ -207,7 +202,6 @@
 		#define COMPILE_GSM_MODEM                0
 	#elif BOARD_VERSION == 4 || BOARD_VERSION == 40
 		#define CMD_SERIAL_MODE		HW_SERIAL
-		#define CMD_HW_SERIAL		NeoSerial
 	
 		#define GPS_SERIAL_MODE		SW_SERIAL
 		#define GSM_SERIAL_MODE		SW_SERIAL
@@ -229,7 +223,6 @@
 		#endif	
 	#elif BOARD_VERSION == 41
 		#define CMD_SERIAL_MODE				HW_SERIAL
-		#define CMD_HW_SERIAL				NeoSerial
 
 		#define GPS_SERIAL_MODE				SW_SERIAL
 		#define GSM_SERIAL_MODE				SW_SERIAL
@@ -258,12 +251,12 @@
 			#define CMD_SERIAL_MODE		IC_SERIAL
 			#define GPS_SERIAL_MODE		SW_SERIAL
 			#define GSM_SERIAL_MODE		HW_SERIAL
-			#define GSM_HW_SERIAL		NeoSerial
 		#else
-			#define CMD_SERIAL_MODE		HW_SERIAL
-			#define GPS_SERIAL_MODE		SW_SERIAL
-			#define GSM_SERIAL_MODE		IC_SERIAL
-			#define CMD_HW_SERIAL		NeoSerial
+			#define CMD_SERIAL_MODE			HW_SERIAL
+			#define CMD_ALT_SERIAL_MODE		IC_SERIAL		
+			
+			//#define GPS_SERIAL_MODE		SW_SERIAL
+			//#define GSM_SERIAL_MODE		IC_SERIAL			
 		#endif
 		
 		#if defined(__AVR_ATmega328P__) //UNO, NANO
@@ -296,8 +289,8 @@
 		#define POT_BASE_OHM        620
 		#define POT_STEP_OHM        750 
 	#else
-		#define POT_BASE_OHM        116
-		#define POT_STEP_OHM        759
+		#define POT_BASE_OHM        135
+		#define POT_STEP_OHM        755
 	#endif
 
 	#if ENABLE_INJECTION
@@ -403,9 +396,6 @@
 	#endif
 	#if !defined(CAN_BAUDRATE)
 		#define CAN_BAUDRATE					CAN_500KBPS
-	#endif
-	#if !defined(CAN_WHITELIST_LENGTH)
-		#define CAN_WHITELIST_LENGTH			0
 	#endif
 	#if !defined(CAN_BLACKLIST_LENGTH)
 		#define CAN_BLACKLIST_LENGTH			0

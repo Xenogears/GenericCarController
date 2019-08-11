@@ -13,16 +13,16 @@
 	#include "../../cmd_serial.h"
 
 	#if COMPILE_SERIAL_CONTROL    
-		bool astraHLOGHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
-		bool astraHOPTHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
-		bool astraHPOWHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
-		bool astraHSYSHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
+		bool astraHLOGHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
+		bool astraHOPTHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
+		bool astraHPOWHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
+		bool astraHSYSHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
 
 		#if COMPILE_REMOTE_DOOR
-			bool astraHRDHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
+			bool astraHRDHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
 		#endif
 		#if COMPILE_RADIO_CONTROL
-			bool astraHRADHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
+			bool astraHRADHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
 		#endif
 	#endif
 
@@ -94,20 +94,20 @@
 
 	
 	//////////////////////// MESSAGE HANDLERS  ////////////////////////
-	bool astraHSYSHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+	bool astraHSYSHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 	{
 		if (utilsEquals_P(cmd, sEcho))
 		{
 			for (uint8_t i = 0; i < paramsLength; i++)
-				cmdSerial.print(params[i]);
+				serial->print(params[i]);
 
-			cmdSerial.println();
+			serial->println();
 			return true;
 		}
 		else return false;
 	}
 
-	bool astraHPOWHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+	bool astraHPOWHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 	{
 		if (utilsEquals_P(cmd, sGet))
 		{
@@ -140,7 +140,7 @@
 		return false;
 	}
 
-	bool astraHOPTHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+	bool astraHOPTHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 	{
 		bool handled;
 
@@ -151,10 +151,10 @@
 			
 			if (1 == 1);
 			#if COMPILE_CAR_STATUS_MONITOR
-				else if (utilsEquals_P(param, sCAR))	cmdSerial.println(CONFIG.get(ENABLE_CAR_STATUS_MONITOR) ? 1 : 0);
+				else if (utilsEquals_P(param, sCAR))	serial->println(CONFIG.get(ENABLE_CAR_STATUS_MONITOR) ? 1 : 0);
 			#endif
 			#if COMPILE_TRACCAR
-				else if (utilsEquals_P(param, sPOW))	cmdSerial.println(CONFIG.get(ENABLE_POWER_NOTIFICATION) ? 1 : 0);
+				else if (utilsEquals_P(param, sPOW))	serial->println(CONFIG.get(ENABLE_POWER_NOTIFICATION) ? 1 : 0);
 			#endif
 			else handled = false;
 		}
@@ -173,14 +173,14 @@
 			#endif						
 
 			if (handled)
-				utilsPrintln_P(sOK);
+				utilsPrintln_P(serial, sOK);
 
 			return (!all & handled);
 		}
 	}		
 
 	#if COMPILE_REMOTE_DOOR
-		bool astraHRDHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+		bool astraHRDHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 		{
 			if (utilsEquals_P(cmd, sSend))
 			{
@@ -191,7 +191,7 @@
 						astraHRemoteDoorSendAction(&DOOR_1_OPEN, &DOOR_1_CLOSE);
 				#endif	
 
-				utilsPrintln_P(sOK);
+				utilsPrintln_P(serial, sOK);
 
 				return true;
 			}
@@ -200,7 +200,7 @@
 	#endif
 
 	#if COMPILE_RADIO_CONTROL
-		bool astraHRADHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+		bool astraHRADHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 		{
 			bool handled = true;
 
@@ -234,7 +234,7 @@
 			else handled = false;
 
 			if(handled)
-				utilsPrintln_P(sOK);
+				utilsPrintln_P(serial, sOK);
 
 			return handled;
 		}

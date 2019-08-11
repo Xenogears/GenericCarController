@@ -17,7 +17,7 @@
 	private:
 		MCP2515 *CAN = NULL;
 
-		#if COMPILE_CAN_WHITELIST && CAN_WHITELIST_LENGTH > 0	
+		#if COMPILE_CAN_WHITELIST
 			uint8_t whitelistLength;
 		#endif
 		#if COMPILE_CAN_BLACKLIST && CAN_BLACKLIST_LENGTH > 0
@@ -107,7 +107,7 @@
 		#endif
       
 		/** WHITE LIST **/ 
-		#if COMPILE_CAN_WHITELIST && CAN_WHITELIST_LENGTH > 0
+		#if COMPILE_CAN_WHITELIST
 			bool setupWhitelist();
 			bool setWhitelistID(uint16_t Id, MCP2515::RXF index);
 		#endif

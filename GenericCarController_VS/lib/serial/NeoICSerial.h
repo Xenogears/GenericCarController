@@ -80,9 +80,9 @@ public:
 	static void enable_timer0(bool enable) { }
 	static bool timing_error;
 
-  typedef void (* isr_t)( uint8_t );
-  static void attachInterrupt( isr_t fn );
-  static void detachInterrupt() { attachInterrupt( (isr_t) NULL ); };
+  typedef void (* isr_t)( uint8_t , void*);
+  static void attachInterrupt(isr_t fn, void *isr_param);
+  static void detachInterrupt() { attachInterrupt( (isr_t) NULL, NULL ); };
 private:
 	static void init(uint32_t cycles_per_bit);
 	static void writeByte(uint8_t byte);

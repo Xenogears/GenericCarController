@@ -83,9 +83,9 @@ public:
   virtual void   flush() {};
           void   end() { ignore(); }
 
-  typedef void (* isr_t)( uint8_t );
-  void attachInterrupt( isr_t fn );
-  void detachInterrupt() { attachInterrupt( (isr_t) NULL ); };
+  typedef void (* isr_t)( uint8_t, void *isr_param );
+  void attachInterrupt( isr_t fn, void *isr_param );
+  void detachInterrupt() { attachInterrupt( (isr_t) NULL , NULL); };
   static bool disableCurrentListener();
 
 private:
@@ -94,6 +94,7 @@ private:
 
   uint16_t _baudRate;
   isr_t    _isr;
+  void	  *_isr_param;
 
   static void rxChar( uint8_t rx ); // buffer or dispatch one received character
 

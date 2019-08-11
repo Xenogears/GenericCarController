@@ -12,10 +12,10 @@
 	class SERIAL_HANDLER
 	{
 		public:
-			const bool (*handler)(char *cmd, char *params[], uint8_t paramsLength);
+			const bool (*handler)(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
 			const PROGMEM char *type;
   
-			SERIAL_HANDLER(const PROGMEM char *t, bool (*h)(char*, char**, uint8_t));
+			SERIAL_HANDLER(const PROGMEM char *t, bool (*h)(Stream*,char*, char**, uint8_t));
 	};
 
 #endif

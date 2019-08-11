@@ -196,19 +196,21 @@ void NeoICSerial::flushOutput(void)
 /****************************************/
 
 static NeoICSerial::isr_t _isr;
+static void* _isr_param;
 
-void NeoICSerial::attachInterrupt( isr_t fn )
+void NeoICSerial::attachInterrupt( isr_t fn, void *isr_param)
 {
   uint8_t oldSREG = SREG;
   cli();
     _isr = fn;
+	_isr_param = isr_param;
   SREG = oldSREG;
 }
 
 static void rx_char( uint8_t rx_byte )
 {
   if (_isr)
-    _isr( rx_byte );
+    _isr( rx_byte , _isr_param);
   else {
     uint8_t head = rx_buffer_head + 1;
     if (head >= RX_BUFFER_SIZE) head = 0;

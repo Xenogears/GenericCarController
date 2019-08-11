@@ -23,8 +23,8 @@
       
 			bool addHandler(SERIAL_HANDLER *h);
 			void clearAllHandlers();
-			bool handleMessage(String *in);
-			bool handleMessage(char *in, uint8_t len);
+			bool handleMessage(Stream *serial, String *in);
+			bool handleMessage(Stream *serial, char *in, uint8_t len);
 	};
   
 	extern SERIAL_CONTROLLER SerialController;

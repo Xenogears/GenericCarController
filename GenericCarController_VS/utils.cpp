@@ -16,64 +16,17 @@ int utilsFreeRAM()
 
 bool utilsResetSystem()
 {    
+	cmdSerialFlush();
+
 	#if POW_ENABLE_WATCHDOG
 		while (1);
-	#elif ARDUINO_RESET_PIN
-		cmdSerial.flush();
+	#elif ARDUINO_RESET_PIN				
 		FastGPIO::Pin<ARDUINO_RESET_PIN>::setOutputLow();
 		return true;
 	#endif	
 
 	return false;
 }
-
-void utilsPrint_P(Stream *o, const PROGMEM char *text)
-{
-	o->print((__FlashStringHelper*)text);
-}
-
-void utilsPrintln_P(Stream *o, const PROGMEM char *text)
-{
-	o->println((__FlashStringHelper*)text);
-}
-
-void utilsPrint(Stream *o, const char *text)
-{
-	o->print(text);
-}
-
-void utilsPrintln(Stream *o, const char *text)
-{
-	o->println(text);
-}
-
-void utilsPrintln()
-{
-	cmdSerial.println();
-}
-
-void utilsPrintln(const char *text)
-{
-	utilsPrintln(&cmdSerial, text);
-}
-
-void utilsPrint(const char *text)
-{
-	utilsPrint(&cmdSerial, text);
-}
-
-void utilsPrint_P(const PROGMEM char *text)
-{
-	utilsPrint_P(&cmdSerial, text);
-}
-
-void utilsPrintln_P(const PROGMEM char *text)
-{
-	utilsPrintln_P(&cmdSerial, text);
-}
-
-
-
 
 bool utilsEndsWith(const char *str1, const char *str2)
 {

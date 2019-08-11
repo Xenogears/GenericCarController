@@ -11,6 +11,7 @@
 	#include "../../can_command.h"
 	#include "../../radio_command.h"
 	#include "../../traccar.h"  
+	#include "../../cmd_serial.h"  
 	#include "astra_h.h"  
 	#include "astra_h_dis.h"   
 	#include "astra_h_alarm_led.h"

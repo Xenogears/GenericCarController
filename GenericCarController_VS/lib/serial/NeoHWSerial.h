@@ -133,11 +133,12 @@ class NeoHWSerial : public Stream
     inline void _rx_complete_irq(void);
     void _tx_udr_empty_irq(void);
 
-    typedef void (* isr_t)( uint8_t );
-    void attachInterrupt( isr_t fn );
-    void detachInterrupt() { attachInterrupt( (isr_t) NULL ); };
+    typedef void (* isr_t)( uint8_t, void* );
+    void attachInterrupt( isr_t fn, void *isr_param );
+    void detachInterrupt() { attachInterrupt( (isr_t) NULL, NULL ); };
   private:
     isr_t  _isr;
+	void *_isr_param;
 
     NeoHWSerial( const NeoHWSerial & );
     NeoHWSerial & operator =( const NeoHWSerial &);

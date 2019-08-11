@@ -9,43 +9,7 @@
 #include "can_command.h"
 #include "can_controller.h"
 
-bool BTHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
-{
-  if(utilsEquals_P(cmd, sSetup))
-  {
-   /* Serial.end();
-    Serial.begin(BLUETOOTH_PREV_BAUDRATE);*/
-    
-	cmdSerial.print(F("AT+ORGL"));
-    delay(2000);   
-	cmdSerial.print(F("AT+PIN"));
-	cmdSerial.print(String(BLUETOOTH_PIN));
-    delay(2000);
-	cmdSerial.print(F("AT+NAME"));
-	cmdSerial.print(F(BLUETOOTH_NAME));
-    delay(2000);
-	cmdSerial.print(F("AT+ROLE=0"));
-    delay(2000);
-	cmdSerial.print(F("AT+POLAR=1,0"));
-    delay(2000);
-	/*cmdSerial.print(F("AT+UART="));
-	cmdSerial.print(BLUETOOTH_NEW_BAUDRATE);
-	cmdSerial.print(F(",0,0"));
-    delay(2000);*/
-	cmdSerial.print(F("AT+BAUD"));
-	cmdSerial.print(BLUETOOTH_NEW_BAUDRATE_INDEX);
-    delay(2000);
-	cmdSerial.print(F("AT+INIT"));
-	cmdSerial.println(sOK);
-
-    /*Serial.end();
-    Serial.begin(DEFAULT_BAUDRATE);*/
-  }
-
-  return true;
-}
-
-bool SYSHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+bool SYSHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 {
 	if (utilsEquals_P(cmd, sReset))
 	{
@@ -54,14 +18,14 @@ bool SYSHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
 	}
 	else if (utilsEquals_P(cmd, sFree))
 	{
-		cmdSerial.println(utilsFreeRAM());
+		serial->println(utilsFreeRAM());
 		return true;
 	}
 
 	return false;
 }
 
-bool LOGHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+bool LOGHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 {
 	bool handled;	
 
@@ -70,25 +34,25 @@ bool LOGHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
 		handled = true;
 		char *param = params[0];
 
-		utilsPrintln();
-		utilsPrint_P(sRES);
-		utilsPrint_P(sTwoDots);
-		utilsPrint_P(sLOG);
-		utilsPrint_P(sTwoDots);
-		utilsPrint(param);
-		utilsPrint_P(sEquals);
+		cmdSerialPrintln(serial);
+		cmdSerialPrint_P(serial, sRES);
+		cmdSerialPrint_P(serial, sTwoDots);
+		cmdSerialPrint_P(serial, sLOG);
+		cmdSerialPrint_P(serial, sTwoDots);
+		cmdSerialPrint(serial, param);
+		cmdSerialPrint_P(serial, sEquals);
                   
-		if (utilsEquals_P(param, sCAN))			cmdSerial.println(CONFIG.get(PRINT_CAN_DATA) ? 1 : 0);
-		else if(utilsEquals_P(param, sPOT))		cmdSerial.println(CONFIG.get(PRINT_POTENTIOMETER_INFO) ? 1 : 0);
-		else if(utilsEquals_P(param, sSTA))		cmdSerial.println(CONFIG.get(PRINT_STATUS_INFO) ? 1 : 0);
-		else if(utilsEquals_P(param, sTRC))		cmdSerial.println(CONFIG.get(PRINT_TRACCAR_INFO) ? 1 : 0);
-		else if(utilsEquals_P(param, sGSM))		cmdSerial.println(CONFIG.get(PRINT_GSM_INFO) ? 1 : 0);
-		else if(utilsEquals_P(param, sGPS))		cmdSerial.println(CONFIG.get(PRINT_GPS_INFO) ? 1 : 0);
+		if (utilsEquals_P(param, sCAN))			serial->println(CONFIG.get(PRINT_CAN_DATA) ? 1 : 0);
+		else if(utilsEquals_P(param, sPOT))		serial->println(CONFIG.get(PRINT_POTENTIOMETER_INFO) ? 1 : 0);
+		else if(utilsEquals_P(param, sSTA))		serial->println(CONFIG.get(PRINT_STATUS_INFO) ? 1 : 0);
+		else if(utilsEquals_P(param, sTRC))		serial->println(CONFIG.get(PRINT_TRACCAR_INFO) ? 1 : 0);
+		else if(utilsEquals_P(param, sGSM))		serial->println(CONFIG.get(PRINT_GSM_INFO) ? 1 : 0);
+		else if(utilsEquals_P(param, sGPS))		serial->println(CONFIG.get(PRINT_GPS_INFO) ? 1 : 0);
 		#if COMPILE_CAR_STATUS_MONITOR
-			else if (utilsEquals_P(param, sCAR))	cmdSerial.println(CONFIG.get(PRINT_CAR_STATUS_INFO) ? 1 : 0);
+			else if (utilsEquals_P(param, sCAR))	serial->println(CONFIG.get(PRINT_CAR_STATUS_INFO) ? 1 : 0);
 		#endif
 		#if COMPILE_DEBUG
-			else if (utilsEquals_P(param, sDBG))	cmdSerial.println(CONFIG.get(PRINT_DEBUG) ? 1 : 0);
+			else if (utilsEquals_P(param, sDBG))	serial->println(CONFIG.get(PRINT_DEBUG) ? 1 : 0);
 		#endif
 		else handled = false;
 
@@ -115,13 +79,13 @@ bool LOGHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
 		#endif
 
 		if (handled)
-			utilsPrintln_P(sOK);	
+			cmdSerialPrintln_P(serial, sOK);	
 
 		return (!all & handled);
 	}
 }
 
-bool OPTHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+bool OPTHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 {
 	bool handled = true;
 	
@@ -129,16 +93,16 @@ bool OPTHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
 	{    
 		char *param = params[0];
 
-		utilsPrintln();
-		utilsPrint_P(sRES);
-		utilsPrint_P(sTwoDots);
-		utilsPrint_P(sOPT);
-		utilsPrint_P(sTwoDots);
-		utilsPrint(param);
-		utilsPrint_P(sEquals);
+		cmdSerialPrintln(serial);
+		cmdSerialPrint_P(serial, sRES);
+		cmdSerialPrint_P(serial, sTwoDots);
+		cmdSerialPrint_P(serial, sOPT);
+		cmdSerialPrint_P(serial, sTwoDots);
+		cmdSerialPrint(serial, param);
+		cmdSerialPrint_P(serial, sEquals);
 
 		if (utilsEquals_P(param, sTRC))
-			cmdSerial.println(CONFIG.get(ENABLE_TRACCAR_NOTIFICATION) ? 1 : 0);
+			serial->println(CONFIG.get(ENABLE_TRACCAR_NOTIFICATION) ? 1 : 0);
 		else
 			handled = false;
 	}
@@ -151,29 +115,29 @@ bool OPTHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
 		else handled = false;	
 
 		if (handled)
-			utilsPrintln_P(sOK);
+			cmdSerialPrintln_P(serial, sOK);
 	}
 
 	return handled;
 }
 
-bool ROMHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+bool ROMHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 {   
   #if COMPILE_EEPROM_CONFIG
-    if(utilsEquals_P(cmd, sSave))			utilsPrintln_P(eepromSave(&CONFIG)		? sOK : sERROR);
-    else if(utilsEquals_P(cmd, sLoad))		utilsPrintln_P(eepromLoad(&CONFIG)		? sOK : sERROR);
-	else if (utilsEquals_P(cmd, sRemove))	utilsPrintln_P(eepromRemoveLastEntry()	? sOK : sERROR);
+    if(utilsEquals_P(cmd, sSave))			cmdSerialPrintln_P(serial, eepromSave(&CONFIG)		? sOK : sERROR);
+    else if(utilsEquals_P(cmd, sLoad))		cmdSerialPrintln_P(serial, eepromLoad(&CONFIG)		? sOK : sERROR);
+	else if (utilsEquals_P(cmd, sRemove))	cmdSerialPrintln_P(serial, eepromRemoveLastEntry()	? sOK : sERROR);
 	else if (utilsEquals_P(cmd, sClear))
 	{
 		CONFIG.clear();
-		utilsPrintln_P(eepromClear() ? sOK : sERROR);
+		cmdSerialPrintln_P(serial, eepromClear() ? sOK : sERROR);
 	}
     else if(utilsEquals_P(cmd, sAdd))
     {
 		if(eepromAddEntry(params[0], strlen(params[0])))
-			utilsPrintln_P(sOK);
+			cmdSerialPrintln_P(serial, sOK);
 		else
-			utilsPrintln_P(sERROR);
+			cmdSerialPrintln_P(serial, sERROR);
     }
     else if(utilsEquals_P(cmd, sShow))
     {
@@ -185,11 +149,11 @@ bool ROMHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
 			eepromReadEntry(entry, tmp);
 			tmp[s] = '\0';
   
-			utilsPrint_P(sENTRY);
-			utilsPrint_P(sTwoDots);
-			cmdSerial.print(i);
-			utilsPrint_P(sEquals);
-			utilsPrintln(tmp);
+			cmdSerialPrint_P(serial, sENTRY);
+			cmdSerialPrint_P(serial, sTwoDots);
+			serial->print(i);
+			cmdSerialPrint_P(serial, sEquals);
+			cmdSerialPrintln(serial, tmp);
   
 			free(tmp);
 		}
@@ -200,13 +164,10 @@ bool ROMHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
 }
 
 #if COMPILE_CAN
-	bool CANHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
+	bool CANHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength)
 	{
-		if (utilsEquals_P(cmd, sSend))
+		if (utilsEquals_P(cmd, sSend) && paramsLength > 0)
 		{					
-			if (paramsLength <= 0)
-				return;
-
 			CAN_COMMAND cmd = CAN_COMMAND();
 			cmd.can_dlc = (paramsLength - 1);
 
@@ -215,7 +176,7 @@ bool ROMHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
 				uint16_t data = 0;
 				if (hexStrToByte(params[i], (uint32_t*)&data) <= 0)
 				{
-					utilsPrintln_P(sERROR);
+					cmdSerialPrintln_P(serial, sERROR);
 					return true;
 				}
 
@@ -226,9 +187,9 @@ bool ROMHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength)
 			}
 
 			if (!DEFAULT_CAN.sendCmd(&cmd))
-				utilsPrintln_P(sERROR);
+				cmdSerialPrintln_P(serial, sERROR);
 			else
-				utilsPrintln_P(sOK);
+				cmdSerialPrintln_P(serial, sOK);
 
 			return true;
 		}

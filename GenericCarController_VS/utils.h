@@ -14,19 +14,6 @@
 
 	int utilsFreeRAM();
 	bool utilsResetSystem();
-
-	void utilsPrint(const char *text) __attribute__((always_inline));
-	void utilsPrint(Stream *o, const char *text) __attribute__((always_inline));
-
-	void utilsPrintln() __attribute__((always_inline));
-	void utilsPrintln(const char *text) __attribute__((always_inline));
-	void utilsPrintln(Stream *o, const char *text) __attribute__((always_inline));
-
-	void utilsPrint_P(const PROGMEM char *text) __attribute__((always_inline));
-	void utilsPrint_P(Stream *o, const PROGMEM char *text) __attribute__((always_inline));
-	
-	void utilsPrintln_P(const PROGMEM char *text) __attribute__((always_inline));
-	void utilsPrintln_P(Stream *o, const PROGMEM char *text) __attribute__((always_inline));
 	
 	bool utilsStartWith(const char *str1, const char *str2);
 	bool utilsEndsWith(const char *str1, const char *str2);

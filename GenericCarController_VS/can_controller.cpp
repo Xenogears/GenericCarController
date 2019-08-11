@@ -230,7 +230,7 @@ CAN_CONTROLLER::CAN_CONTROLLER(const uint8_t csPin, const uint8_t intPin, void (
 	#if CAN_ENABLE_MIN_DELAY_BETWEEN_COMMANDS
 		this->nextTXmillis = 0;
 	#endif  
-    #if COMPILE_CAN_WHITELIST && CAN_WHITELIST_LENGTH > 0
+    #if COMPILE_CAN_WHITELIST
 		this->whitelistLength = 0;
     #endif
     #if COMPILE_CAN_BLACKLIST && CAN_BLACKLIST_LENGTH > 0
@@ -256,7 +256,7 @@ bool CAN_CONTROLLER::begin(const CAN_SPEED bitrate, const CAN_CLOCK clockSet)
 	if (this->CAN->setBitrate(bitrate, clockSet) != MCP2515::ERROR_OK)
 		return false;
 
-	#if COMPILE_CAN_WHITELIST && CAN_WHITELIST_LENGTH > 0
+	#if COMPILE_CAN_WHITELIST
 		if (!this->setupWhitelist())
 			return false;
 	#endif
@@ -504,7 +504,7 @@ bool CAN_CONTROLLER::pushRXCmd(CAN_COMMAND *cmd)
 #pragma endregion
    
 #pragma region /** WHITE LIST **/ 
-#if COMPILE_CAN_WHITELIST && CAN_WHITELIST_LENGTH > 0
+#if COMPILE_CAN_WHITELIST
 	bool CAN_CONTROLLER::setupWhitelist()
 	{           	
 		bool stat = true;

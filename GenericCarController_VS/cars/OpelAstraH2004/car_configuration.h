@@ -28,7 +28,6 @@
 
 //MSCAN 
 #define CAN_BAUDRATE					CAN_95KBPS
-#define CAN_WHITELIST_LENGTH            6  //items
 #define CAN_BLACKLIST_LENGTH            0  //items
 #define CAN_PERIODICAL_CMDS_LENGTH      1  //items
 #define CAN_FRIEND_FUNCTION				bool astraHDISRequestText(CAN_CONTROLLER *can)
@@ -58,7 +57,7 @@
 
 //DIS
 const char PROGMEM DIS_MESSAGE[]		= { "Opel Astra H" };
-#define COMPILE_DIS						1
+#define COMPILE_DIS						0
 #define DIS_MESSAGE_USES_PROGMEM		1
 #define DIS_TICK_INTERVAL               200 //ms
 #define DIS_REFRESH_TICKS               15  //MAX 17
@@ -72,7 +71,7 @@ const char PROGMEM DIS_MESSAGE[]		= { "Opel Astra H" };
 #define DIS_SIMULATE_BC_RESPONSE        0
 
 //TEST MODE
-#define COMPILE_TEST_MODE				1
+#define COMPILE_TEST_MODE				0
 #define TEST_MODE_TX_INTERVAL			40 //ms
 #define TEST_MODE_INITIAL_DELAY			500 //ms
 

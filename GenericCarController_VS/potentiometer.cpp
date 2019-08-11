@@ -28,8 +28,8 @@ void potDisableResistor()
 
 	potDigitalWrite(MCP4131_DEFAULT_STEP, MCP4131_TCON_DISABLED);
 	
-    if(CONFIG.get(PRINT_POTENTIOMETER_INFO))
-		cmdSerial.println(F("P-"));
+	if (CONFIG.get(PRINT_POTENTIOMETER_INFO))
+		cmdSerialPrintln("P-");
 }
 
 bool setupPOT()
@@ -51,21 +51,22 @@ void potSetResistor(uint8_t step, const uint16_t interval = 0, bool ring = false
 {
 	if(CONFIG.get(PRINT_POTENTIOMETER_INFO))
 	{        
-		utilsPrint_P(sPOT);
-		utilsPrint_P(sTwoDots);
-		cmdSerial.print(step);
+		cmdSerialPrint_P(sPOT);
+		cmdSerialPrint_P(sTwoDots);
+		cmdSerialPrint((int)step);
 
-		#if POT_SHOW_KOHMS
+		#if POT_SHOW_KOHMS			
+			float kOhms = ((step * POT_STEP_OHM) + POT_BASE_OHM) / 1000.0f;
 			utilsPrint_P(sComma);
-			cmdSerial.print(((step * POT_STEP_OHM) + POT_BASE_OHM) / 1000.0f);
+			cmdSerial.print(kOhms);
 		#endif
 
 		if (ring)
 		{
-			utilsPrint_P(sComma);
-			utilsPrintln_P(sWithRing);
+			cmdSerialPrint_P(sComma);
+			cmdSerialPrintln_P(sWithRing);
 		}
-		else cmdSerial.println();
+		else cmdSerialPrintln();
 	}
 
 	potDigitalWrite(step, MCP4131_TCON_ENABLED);

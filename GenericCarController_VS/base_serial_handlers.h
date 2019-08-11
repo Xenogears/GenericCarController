@@ -14,14 +14,13 @@
 	#include "configuration_eeprom.h"
 	#include "traccar.h"  
 	#include "utils.h"
-
-	bool BTHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);    
-	bool SYSHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
-	bool LOGHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
-	bool OPTHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
-	bool ROMHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
+	
+	bool SYSHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
+	bool LOGHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
+	bool OPTHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
+	bool ROMHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
 
 	#if COMPILE_CAN
-		bool CANHandleConfCmd(char *cmd, char *params[], uint8_t paramsLength);
+		bool CANHandleConfCmd(Stream *serial, char *cmd, char *params[], uint8_t paramsLength);
 	#endif
 #endif
